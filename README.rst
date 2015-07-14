@@ -3,6 +3,9 @@ django-jabber
 
 Send Jabber notifications from Django
 
+.. image:: https://travis-ci.org/alexmorozov/django-jabber.svg?branch=master
+    :target: https://travis-ci.org/alexmorozov/django-jabber
+
 Usage
 -----
 
