@@ -41,6 +41,7 @@ Add some lines to your settings.py:
         'PASSWORD': 'someStr0ngOne!1',
         'USE_TLS': True,
         'USE_SSL': False,
+        'DRY_RUN': False,  # Useful for testing
     }
 
 Requirements

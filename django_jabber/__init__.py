@@ -41,6 +41,8 @@ def send_message(message, recipients):
     Send a single message to a list of recipients
     """
     options = settings.JABBER
+    if options.get('DRY_RUN', False):
+        return
     bot = SendMsgBot(options['USER'], options['PASSWORD'],
                      options['HOST'], recipients, message)
     if bot.connect(use_tls=options.get('USE_TLS', True),
