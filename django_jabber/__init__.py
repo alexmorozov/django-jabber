@@ -3,7 +3,7 @@
 from sleekxmpp import ClientXMPP
 from celery import shared_task
 
-from django.conf import settings
+from conf import settings
 
 
 class SendMsgBot(ClientXMPP):
@@ -40,11 +40,9 @@ def send_message(message, recipients):
     """
     Send a single message to a list of recipients
     """
-    options = settings.JABBER
-    if options.get('DRY_RUN', False):
+    if settings.JABBER_DRY_RUN:
         return
-    bot = SendMsgBot(options['USER'], options['PASSWORD'],
-                     options['HOST'], recipients, message)
-    if bot.connect(use_tls=options.get('USE_TLS', True),
-                   use_ssl=options.get('USE_SSL', False)):
+    bot = SendMsgBot(settings.JABBER_USER, settings.JABBER_PASSWORD,
+                     settings.JABBER_HOST, recipients, message)
+    if bot.connect(use_tls=settings.USE_TLS, use_ssl=settings.USE_SSL):
         bot.process(block=True)

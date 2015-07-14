@@ -35,14 +35,12 @@ Add some lines to your settings.py:
         ...
     )
 
-    JABBER = {
-        'HOST': 'jabber.domain.com',
-        'USER': 'robot@domain.com',
-        'PASSWORD': 'someStr0ngOne!1',
-        'USE_TLS': True,
-        'USE_SSL': False,
-        'DRY_RUN': False,  # Useful for testing
-    }
+    JABBER_HOST = 'jabber.domain.com'
+    JABBER_USER = 'robot@domain.com'
+    JABBER_PASSWORD = 'someStr0ngOne!1'
+    JABBER_USE_TLS = True
+    JABBER_USE_SSL = False
+    JABBER_DRY_RUN = False  # Useful for testing
 
 Requirements
 ^^^^^^^^^^^^
