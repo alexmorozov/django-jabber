@@ -1,5 +1,48 @@
-"""django-jabber - Send Jabber notifications from Django"""
+#--coding: utf8--
 
-__version__ = '0.1.0'
-__author__ = 'Alex Morozov <inductor2000@mail.ru>'
-__all__ = []
+from sleekxmpp import ClientXMPP
+from celery import shared_task
+
+from django.conf import settings
+
+
+class SendMsgBot(ClientXMPP):
+    """
+    Simple synchronous XMPP bot.
+    """
+    def jid(self, user):
+        return '%s@%s' % (user, self.host)
+
+    def __init__(self, user, password, host, recipients, msg):
+        self.recipients = recipients
+        self.msg = msg
+        self.host = host
+        plugin_config = {
+            # Enables PLAIN authentication which is off by default.
+            'feature_mechanisms': {'unencrypted_plain': True},
+        }
+        super(SendMsgBot, self).__init__(self.jid(user), password,
+                                         plugin_config=plugin_config)
+        self.add_event_handler('session_start', self.start)
+
+    def start(self, event):
+        self.send_presence()
+        self.get_roster()
+
+        for r in self.recipients:
+            self.send_message(mto=self.jid(r), mbody=self.msg)
+
+        self.disconnect(wait=True)
+
+
+@shared_task(name='django_jabber.send_message')
+def send_message(message, recipients):
+    """
+    Send a single message to a list of recipients
+    """
+    options = settings.JABBER
+    bot = SendMsgBot(options['USER'], options['PASSWORD'],
+                     options['HOST'], recipients, message)
+    if bot.connect(use_tls=options.get('USE_TLS', True),
+                   use_ssl=options.get('USE_SSL', False)):
+        bot.process(block=True)

@@ -1,5 +1,11 @@
 import setuptools
 
+
+def parse_requirements(requirements_file):
+    with open(requirements_file, 'r') as f:
+        return [line for line in f
+                if line.strip() and not line.startswith('#')]
+
 setuptools.setup(
     name="django-jabber",
     version="0.1.0",
@@ -13,7 +19,7 @@ setuptools.setup(
 
     packages=setuptools.find_packages(),
 
-    install_requires=[],
+    install_requires=parse_requirements('requirements.txt'),
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
