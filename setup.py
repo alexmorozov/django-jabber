@@ -8,7 +8,7 @@ def parse_requirements(requirements_file):
 
 setuptools.setup(
     name="django-jabber",
-    version="0.3.0",
+    version="1.0.0",
     url="https://github.com/alexmorozov/django-jabber",
 
     author="Alex Morozov",
