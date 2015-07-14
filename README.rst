@@ -25,6 +25,7 @@ Install the package via Pypi: `pip install django-jabber`
 Add some lines to your settings.py:
 
 .. code-block:: python
+
     INSTALLED_APPS = (
         ...
         'django_jabber',
