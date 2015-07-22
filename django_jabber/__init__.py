@@ -44,5 +44,6 @@ def send_message(message, recipients):
         return
     bot = SendMsgBot(settings.JABBER_USER, settings.JABBER_PASSWORD,
                      settings.JABBER_HOST, recipients, message)
-    if bot.connect(use_tls=settings.USE_TLS, use_ssl=settings.USE_SSL):
+    if bot.connect(use_tls=settings.JABBER_USE_TLS,
+                   use_ssl=settings.JABBER_USE_SSL):
         bot.process(block=True)
