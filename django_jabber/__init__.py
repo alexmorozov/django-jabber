@@ -3,7 +3,7 @@
 from sleekxmpp import ClientXMPP
 from celery import shared_task
 
-from conf import settings
+from django.conf import settings
 
 
 class SendMsgBot(ClientXMPP):
